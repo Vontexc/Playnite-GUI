@@ -1,0 +1,33 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ============================================================
+         PlaytimeFormatter
+         ============================================================
+         Pure-XAML format strings for Playnite's Playtime field
+         (stored as ulong seconds). Used by GameDetails and similar.
+
+         Playnite ships its own PlayTimeToStringConverter which formats
+         Playtime nicely; we expose a couple of resource-level format
+         strings so views stay declarative.
+
+         Usage:
+             <TextBlock Text="{Binding Game.Playtime,
+                                       StringFormat={StaticResource PlaytimeSecondsFormat}}" />
+
+         For human-friendly hour/minute output, prefer Playnite's built-in
+         {Binding Game.Playtime, Converter={StaticResource PlayTimeToStringConverter}}
+         from PlayniteUI; this dictionary intentionally avoids reinventing
+         that logic without code-behind.
+         ============================================================ -->
+
+    <sys:String x:Key="PlaytimeSecondsFormat">{0} sec</sys:String>
+    <sys:String x:Key="PlaytimeRawFormat">{0}</sys:String>
+
+    <!-- Label-prefixed variants -->
+    <sys:String x:Key="PlaytimePlayedLabelFormat">Played: {0}</sys:String>
+    <sys:String x:Key="PlaytimeLastSessionLabelFormat">Last session: {0}</sys:String>
+
+</ResourceDictionary>

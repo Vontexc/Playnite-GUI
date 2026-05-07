@@ -1,0 +1,133 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:SteamLike.Converters;assembly=SteamLike.Companion">
+
+    <!-- ============================================================
+         HltbPanel – three-card HowLongToBeat readout.
+         Layout:  [ Main Story ] [ Main + Extras ] [ Completionist ]
+
+         Approach: an outer ContentControl runs the Game through
+         HltbDataConverter once. The result (HltbInfo) becomes the
+         DataContext of the inner template, where each card binds to
+         a plain property path on HltbInfo (no per-card converter).
+
+         The HltbDataConverter type lives in SteamLike.Companion
+         (see Converters/HltbDataConverter.cs); register that DLL with
+         Playnite for this binding to resolve at runtime.
+         ============================================================ -->
+
+    <conv:HltbDataConverter x:Key="HltbDataConverter" />
+
+    <!-- Single card body. DataContext is the HltbInfo; the binding paths
+         (MainStory / MainExtra / Completionist) are set by callers via
+         a thin wrapper template per card. -->
+    <Style x:Key="HltbCardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource BgPanelBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource CornerRadiusMedium}" />
+        <Setter Property="Padding" Value="20,16,20,16" />
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <!-- Inner template: receives an HltbInfo as its DataContext. -->
+    <DataTemplate x:Key="HltbInnerTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Main Story -->
+            <Border Grid.Column="0"
+                    Style="{StaticResource HltbCardStyle}"
+                    Margin="0,0,8,0">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding MainStory,
+                                                  StringFormat={}{0:0.#},
+                                                  FallbackValue='—',
+                                                  TargetNullValue='—'}"
+                                   Style="{StaticResource HltbValueTextStyle}" />
+                        <TextBlock Text=" h"
+                                   Style="{StaticResource HltbValueTextStyle}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
+                                   VerticalAlignment="Bottom"
+                                   Margin="2,0,0,2"
+                                   FontSize="18" />
+                    </StackPanel>
+                    <TextBlock Text="MAIN STORY"
+                               Style="{StaticResource HltbLabelTextStyle}"
+                               HorizontalAlignment="Center"
+                               Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Main + Extras -->
+            <Border Grid.Column="1"
+                    Style="{StaticResource HltbCardStyle}"
+                    Margin="4,0,4,0">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding MainExtra,
+                                                  StringFormat={}{0:0.#},
+                                                  FallbackValue='—',
+                                                  TargetNullValue='—'}"
+                                   Style="{StaticResource HltbValueTextStyle}" />
+                        <TextBlock Text=" h"
+                                   Style="{StaticResource HltbValueTextStyle}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
+                                   VerticalAlignment="Bottom"
+                                   Margin="2,0,0,2"
+                                   FontSize="18" />
+                    </StackPanel>
+                    <TextBlock Text="MAIN + EXTRAS"
+                               Style="{StaticResource HltbLabelTextStyle}"
+                               HorizontalAlignment="Center"
+                               Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Completionist -->
+            <Border Grid.Column="2"
+                    Style="{StaticResource HltbCardStyle}"
+                    Margin="8,0,0,0">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Completionist,
+                                                  StringFormat={}{0:0.#},
+                                                  FallbackValue='—',
+                                                  TargetNullValue='—'}"
+                                   Style="{StaticResource HltbValueTextStyle}" />
+                        <TextBlock Text=" h"
+                                   Style="{StaticResource HltbValueTextStyle}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
+                                   VerticalAlignment="Bottom"
+                                   Margin="2,0,0,2"
+                                   FontSize="18" />
+                    </StackPanel>
+                    <TextBlock Text="COMPLETIONIST"
+                               Style="{StaticResource HltbLabelTextStyle}"
+                               HorizontalAlignment="Center"
+                               Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <!-- Outer wrapper: bind DataContext to the Game; Content runs through
+         the converter so the inner template sees an HltbInfo. -->
+    <ControlTemplate x:Key="HltbPanelTemplate" TargetType="ContentControl">
+        <ContentControl Content="{Binding Converter={StaticResource HltbDataConverter},
+                                          FallbackValue={x:Null},
+                                          TargetNullValue={x:Null}}"
+                        ContentTemplate="{StaticResource HltbInnerTemplate}" />
+    </ControlTemplate>
+
+    <Style x:Key="HltbPanelStyle" TargetType="ContentControl">
+        <Setter Property="Template" Value="{StaticResource HltbPanelTemplate}" />
+    </Style>
+
+</ResourceDictionary>
