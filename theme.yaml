@@ -1,0 +1,10 @@
+Id: SteamLike_Theme
+Name: SteamLike
+Author: Vontexc
+Version: 0.1.0
+Manifest: 1
+ThemeApiVersion: "2.5.0"
+Description: |
+  Steam-inspired desktop theme for Playnite. Features a focused game detail
+  view with HowLongToBeat integration, animated cover/background, and trailer
+  video playback. Dark Steam-style palette throughout.

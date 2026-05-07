@@ -1,0 +1,108 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ============================================================
+         SteamLike Color Tokens
+         All colors defined as both Color (for animations / gradients)
+         and SolidColorBrush (for direct binding).
+         ============================================================ -->
+
+    <!-- Backgrounds -->
+    <Color x:Key="BgDeepColor">#FF1B2838</Color>
+    <Color x:Key="BgPanelColor">#FF2A475E</Color>
+    <Color x:Key="BgElevatedColor">#FF316282</Color>
+
+    <!-- Accents -->
+    <Color x:Key="AccentBlueColor">#FF66C0F4</Color>
+    <Color x:Key="AccentGreenColor">#FFA4D007</Color>
+    <Color x:Key="AccentGreenDarkColor">#FF6AA20B</Color>
+    <Color x:Key="AccentBlueDarkColor">#FF417A9B</Color>
+
+    <!-- Text -->
+    <Color x:Key="TextPrimaryColor">#FFC7D5E0</Color>
+    <Color x:Key="TextMutedColor">#FF8F98A0</Color>
+    <Color x:Key="TextOnAccentColor">#FF1B2838</Color>
+
+    <!-- Gradient stops -->
+    <Color x:Key="GradientTopColor">#FF1B2838</Color>
+    <Color x:Key="GradientBottomColor">#FF0E1822</Color>
+
+    <!-- Utility -->
+    <Color x:Key="OverlayDarkColor">#CC000000</Color>
+    <Color x:Key="DividerColor">#33C7D5E0</Color>
+
+    <!-- ============================================================
+         SolidColorBrush resources (use these in XAML)
+         ============================================================ -->
+
+    <SolidColorBrush x:Key="BgDeepBrush" Color="{StaticResource BgDeepColor}" />
+    <SolidColorBrush x:Key="BgPanelBrush" Color="{StaticResource BgPanelColor}" />
+    <SolidColorBrush x:Key="BgElevatedBrush" Color="{StaticResource BgElevatedColor}" />
+
+    <SolidColorBrush x:Key="AccentBlueBrush" Color="{StaticResource AccentBlueColor}" />
+    <SolidColorBrush x:Key="AccentGreenBrush" Color="{StaticResource AccentGreenColor}" />
+    <SolidColorBrush x:Key="AccentGreenDarkBrush" Color="{StaticResource AccentGreenDarkColor}" />
+    <SolidColorBrush x:Key="AccentBlueDarkBrush" Color="{StaticResource AccentBlueDarkColor}" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}" />
+    <SolidColorBrush x:Key="TextOnAccentBrush" Color="{StaticResource TextOnAccentColor}" />
+
+    <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
+    <SolidColorBrush x:Key="OverlayDarkBrush" Color="{StaticResource OverlayDarkColor}" />
+
+    <!-- ============================================================
+         Signature gradients
+         ============================================================ -->
+
+    <!-- Vertical hero/header gradient (top-down) -->
+    <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource GradientTopColor}" Offset="0.0" />
+        <GradientStop Color="{StaticResource GradientBottomColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Diagonal hero overlay used over background images -->
+    <LinearGradientBrush x:Key="HeroOverlayGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#001B2838" Offset="0.0" />
+        <GradientStop Color="#991B2838" Offset="0.6" />
+        <GradientStop Color="{StaticResource GradientBottomColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Steam-green Play-button gradient -->
+    <LinearGradientBrush x:Key="PlayButtonGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFB8E535" Offset="0.0" />
+        <GradientStop Color="{StaticResource AccentGreenColor}" Offset="0.5" />
+        <GradientStop Color="{StaticResource AccentGreenDarkColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Hover variant of the green button -->
+    <LinearGradientBrush x:Key="PlayButtonHoverGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFCDF34A" Offset="0.0" />
+        <GradientStop Color="#FFB8E535" Offset="0.5" />
+        <GradientStop Color="{StaticResource AccentGreenColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Secondary blue button gradient -->
+    <LinearGradientBrush x:Key="SecondaryButtonGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource AccentBlueColor}" Offset="0.0" />
+        <GradientStop Color="{StaticResource AccentBlueDarkColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="SecondaryButtonHoverGradientBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FF8FD4F8" Offset="0.0" />
+        <GradientStop Color="{StaticResource AccentBlueColor}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- ============================================================
+         Shared geometry / sizing tokens
+         ============================================================ -->
+
+    <CornerRadius x:Key="CornerRadiusSmall">2</CornerRadius>
+    <CornerRadius x:Key="CornerRadiusMedium">4</CornerRadius>
+    <CornerRadius x:Key="CornerRadiusLarge">6</CornerRadius>
+
+    <sys:Double x:Key="DividerThickness">1</sys:Double>
+
+</ResourceDictionary>
