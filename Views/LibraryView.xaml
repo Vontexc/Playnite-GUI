@@ -1,0 +1,108 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================================
+         LibraryView – main library surface.
+         Layout (3 rows, 2 columns):
+           ┌────────────────────────────────────┐
+           │ TopPanel (full width)              │
+           ├──────────┬─────────────────────────┤
+           │ Sidebar  │ Cover-Grid (scrollable) │
+           ├──────────┴─────────────────────────┤
+           │ Status / footer                    │
+           └────────────────────────────────────┘
+         All sub-views are pulled in as ContentControls referencing the
+         styles from Views/TopPanel.xaml and Views/Sidebar.xaml.
+         The cover grid uses an ItemsControl + virtualizing WrapPanel,
+         items rendered via the GameCoverCardTemplate.
+         ============================================================ -->
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Controls/GameCoverCard.xaml" />
+        <ResourceDictionary Source="TopPanel.xaml" />
+        <ResourceDictionary Source="Sidebar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ItemsPanel: virtualizing WrapPanel for performance with large libs -->
+    <ItemsPanelTemplate x:Key="GameCoverGridPanelTemplate">
+        <WrapPanel Orientation="Horizontal"
+                   IsItemsHost="True" />
+    </ItemsPanelTemplate>
+
+    <!-- The full LibraryView template -->
+    <ControlTemplate x:Key="LibraryViewTemplate" TargetType="ContentControl">
+        <Grid Background="{DynamicResource BgDeepBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Top panel -->
+            <ContentControl Grid.Row="0"
+                            Style="{StaticResource TopPanelStyle}"
+                            DataContext="{Binding}" />
+
+            <!-- Body: sidebar + grid -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ContentControl Grid.Column="0"
+                                Style="{StaticResource SidebarStyle}"
+                                DataContext="{Binding}" />
+
+                <!-- Cover grid -->
+                <Border Grid.Column="1" Background="{DynamicResource BgDeepBrush}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="16,16,16,16">
+                        <ItemsControl ItemsSource="{Binding MainModel.GamesView.CollectionView,
+                                                            FallbackValue={x:Null},
+                                                            TargetNullValue={x:Null}}"
+                                      ItemsPanel="{StaticResource GameCoverGridPanelTemplate}"
+                                      ItemTemplate="{StaticResource GameCoverCardTemplate}"
+                                      VirtualizingPanel.IsVirtualizing="True"
+                                      VirtualizingPanel.VirtualizationMode="Recycling"
+                                      ScrollViewer.CanContentScroll="True" />
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- Footer / status bar slot (filled by Statusbar.xaml in later phases) -->
+            <Border Grid.Row="2"
+                    Background="{DynamicResource BgPanelBrush}"
+                    BorderBrush="{DynamicResource DividerBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="14,6,14,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource CaptionTextStyle}"
+                               VerticalAlignment="Center">
+                        <Run Text="Games: " />
+                        <Run Text="{Binding MainModel.GamesView.CollectionView.Count,
+                                            Mode=OneWay,
+                                            FallbackValue=0,
+                                            TargetNullValue=0}" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="1"
+                               Style="{StaticResource CaptionTextStyle}"
+                               Text="SteamLike v0.1.0"
+                               VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="LibraryViewStyle" TargetType="ContentControl">
+        <Setter Property="Template" Value="{StaticResource LibraryViewTemplate}" />
+    </Style>
+
+</ResourceDictionary>

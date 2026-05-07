@@ -1,0 +1,93 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================================
+         Sidebar – left filter rail. Three collapsible sections:
+         Libraries (plugins), Categories, Tags.
+         All ItemsSource bindings carry FallbackValue so the rail is
+         renderable in design time without a live MainModel.
+         ============================================================ -->
+
+    <ControlTemplate x:Key="SidebarTemplate" TargetType="ContentControl">
+        <Border Background="{DynamicResource BgDeepBrush}"
+                BorderBrush="{DynamicResource DividerBrush}"
+                BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="0,12,0,12">
+
+                    <!-- ====== Libraries / Plugins ====== -->
+                    <Expander IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="LIBRARIES"
+                                       Style="{StaticResource SectionHeaderTextStyle}"
+                                       Margin="0" />
+                        </Expander.Header>
+                        <ListBox Style="{StaticResource SidebarListBoxStyle}"
+                                 ItemsSource="{Binding MainModel.LibraryPlugins,
+                                                       FallbackValue={x:Null},
+                                                       TargetNullValue={x:Null}}"
+                                 SelectedItem="{Binding MainModel.SelectedLibraryPlugin,
+                                                        FallbackValue={x:Null},
+                                                        TargetNullValue={x:Null}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name, FallbackValue='(unnamed)'}"
+                                               Style="{StaticResource BodyTextStyle}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                    <!-- ====== Categories ====== -->
+                    <Expander IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="CATEGORIES"
+                                       Style="{StaticResource SectionHeaderTextStyle}"
+                                       Margin="0" />
+                        </Expander.Header>
+                        <ListBox Style="{StaticResource SidebarListBoxStyle}"
+                                 ItemsSource="{Binding MainModel.Database.Categories,
+                                                       FallbackValue={x:Null},
+                                                       TargetNullValue={x:Null}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name, FallbackValue='(unnamed)'}"
+                                               Style="{StaticResource BodyTextStyle}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                    <!-- ====== Tags ====== -->
+                    <Expander IsExpanded="False">
+                        <Expander.Header>
+                            <TextBlock Text="TAGS"
+                                       Style="{StaticResource SectionHeaderTextStyle}"
+                                       Margin="0" />
+                        </Expander.Header>
+                        <ListBox Style="{StaticResource SidebarListBoxStyle}"
+                                 ItemsSource="{Binding MainModel.Database.Tags,
+                                                       FallbackValue={x:Null},
+                                                       TargetNullValue={x:Null}}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name, FallbackValue='(unnamed)'}"
+                                               Style="{StaticResource BodyTextStyle}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="SidebarStyle" TargetType="ContentControl">
+        <Setter Property="MinWidth" Value="220" />
+        <Setter Property="Template" Value="{StaticResource SidebarTemplate}" />
+    </Style>
+
+</ResourceDictionary>

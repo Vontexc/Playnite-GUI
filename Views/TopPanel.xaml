@@ -1,0 +1,107 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================================
+         TopPanel – Steam-style horizontal navigation bar.
+         Bindings target the standard Playnite MainModel; FallbackValues
+         keep the panel safe when the model is not yet wired up.
+         ============================================================ -->
+
+    <ControlTemplate x:Key="TopPanelTemplate" TargetType="ContentControl">
+        <Border Background="{DynamicResource HeroGradientBrush}">
+            <Border BorderBrush="{DynamicResource DividerBrush}"
+                    BorderThickness="0,0,0,1">
+                <Grid Margin="16,8,16,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left: brand + nav links -->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="STEAMLIKE"
+                                   Style="{StaticResource H2TextStyle}"
+                                   Foreground="{DynamicResource AccentBlueBrush}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,24,0" />
+
+                        <Button Style="{StaticResource GhostButtonStyle}"
+                                Content="LIBRARY"
+                                Margin="0,0,4,0" />
+                        <Button Style="{StaticResource GhostButtonStyle}"
+                                Content="STORE"
+                                Margin="0,0,4,0" />
+                        <Button Style="{StaticResource GhostButtonStyle}"
+                                Content="COMMUNITY" />
+                    </StackPanel>
+
+                    <!-- Center: search box -->
+                    <Grid Grid.Column="1"
+                          MaxWidth="420"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                        <TextBox Style="{StaticResource SearchTextBoxStyle}"
+                                 Text="{Binding MainModel.SearchText,
+                                                UpdateSourceTrigger=PropertyChanged,
+                                                FallbackValue='',
+                                                TargetNullValue=''}" />
+                        <TextBlock Text="Search your library…"
+                                   Style="{StaticResource MutedTextStyle}"
+                                   Margin="14,0,0,0"
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource MutedTextStyle}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MainModel.SearchText,
+                                                                       FallbackValue='',
+                                                                       TargetNullValue=''}"
+                                                     Value="">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <!-- Right: sort + view switcher -->
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Sort:"
+                                   Style="{StaticResource CaptionTextStyle}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,6,0" />
+                        <ComboBox Style="{StaticResource SteamLikeComboBoxStyle}"
+                                  MinWidth="140"
+                                  Margin="0,0,12,0"
+                                  SelectedValue="{Binding MainModel.AppSettings.ViewSettings.SortingOrder,
+                                                          FallbackValue={x:Null},
+                                                          TargetNullValue={x:Null}}" />
+
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Content="GRID"
+                                ToolTip="Grid view" />
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Content="LIST"
+                                ToolTip="List view" />
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Content="DETAILS"
+                                ToolTip="Details view" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="TopPanelStyle" TargetType="ContentControl">
+        <Setter Property="Template" Value="{StaticResource TopPanelTemplate}" />
+    </Style>
+
+</ResourceDictionary>
