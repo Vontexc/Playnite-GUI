@@ -1,0 +1,17 @@
+# Build output
+dist/
+**/bin/
+**/obj/
+
+# IDE / editor noise
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Pack artifacts
+*.pthm
+
+# OS junk
+Thumbs.db
+.DS_Store

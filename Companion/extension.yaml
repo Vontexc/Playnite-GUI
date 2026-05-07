@@ -1,0 +1,14 @@
+Id: SteamLike_Companion_5e7d8c1a
+Name: SteamLike Companion
+Author: Vontexc
+Version: 0.1.0
+Module: SteamLike.Companion.dll
+Type: GenericPlugin
+Icon: ""
+Description: |
+  Companion extension for the SteamLike Playnite theme. Exposes the
+  HltbDataConverter type so the theme's HLTB panel can resolve
+  HowLongToBeat data at runtime. Carries no own UI.
+Links:
+  - Name: Theme
+    Url: https://github.com/Vontexc/playnite-gui

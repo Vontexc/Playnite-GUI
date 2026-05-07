@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>SteamLike.Companion</AssemblyName>
+    <RootNamespace>SteamLike.Companion</RootNamespace>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Version>0.1.0</Version>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Adjust the SDK version to match your installed Playnite. -->
+    <PackageReference Include="PlayniteSDK" Version="6.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Source the converter from the theme tree (single source of truth). -->
+    <Compile Include="..\Converters\HltbDataConverter.cs">
+      <Link>Converters\HltbDataConverter.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Ship the Playnite extension manifest next to the DLL. -->
+    <None Update="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
