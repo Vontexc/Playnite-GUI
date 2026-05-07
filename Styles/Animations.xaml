@@ -1,0 +1,46 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================================
+         Shared storyboards / easings.
+         Apply to FrameworkElements via EventTrigger on Loaded for a
+         soft Steam-like fade-in when a view mounts.
+         ============================================================ -->
+
+    <!-- Easings -->
+    <CubicEase x:Key="EaseOutCubic" EasingMode="EaseOut" />
+    <QuadraticEase x:Key="EaseOutQuad" EasingMode="EaseOut" />
+
+    <!-- 220ms opacity fade-in (no transform). -->
+    <Storyboard x:Key="FadeInStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                         From="0" To="1"
+                         Duration="0:0:0.22"
+                         EasingFunction="{StaticResource EaseOutCubic}" />
+    </Storyboard>
+
+    <!-- 320ms fade + 12px slide-up. Target must have a TranslateTransform
+         with x:Name="SlideTransform" or be wrapped in one. -->
+    <Storyboard x:Key="SlideUpFadeInStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                         From="0" To="1"
+                         Duration="0:0:0.32"
+                         EasingFunction="{StaticResource EaseOutCubic}" />
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         From="12" To="0"
+                         Duration="0:0:0.32"
+                         EasingFunction="{StaticResource EaseOutCubic}" />
+    </Storyboard>
+
+    <!-- Reusable Style that fades any FrameworkElement in on Loaded. -->
+    <Style x:Key="FadeInOnLoadedStyle" TargetType="FrameworkElement">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource FadeInStoryboard}" />
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

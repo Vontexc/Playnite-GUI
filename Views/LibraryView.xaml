@@ -22,6 +22,7 @@
         <ResourceDictionary Source="../Controls/GameCoverCard.xaml" />
         <ResourceDictionary Source="TopPanel.xaml" />
         <ResourceDictionary Source="Sidebar.xaml" />
+        <ResourceDictionary Source="Statusbar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- ItemsPanel: virtualizing WrapPanel for performance with large libs -->
@@ -72,32 +73,10 @@
                 </Border>
             </Grid>
 
-            <!-- Footer / status bar slot (filled by Statusbar.xaml in later phases) -->
-            <Border Grid.Row="2"
-                    Background="{DynamicResource BgPanelBrush}"
-                    BorderBrush="{DynamicResource DividerBrush}"
-                    BorderThickness="0,1,0,0"
-                    Padding="14,6,14,6">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
-                               Style="{StaticResource CaptionTextStyle}"
-                               VerticalAlignment="Center">
-                        <Run Text="Games: " />
-                        <Run Text="{Binding MainModel.GamesView.CollectionView.Count,
-                                            Mode=OneWay,
-                                            FallbackValue=0,
-                                            TargetNullValue=0}" />
-                    </TextBlock>
-                    <TextBlock Grid.Column="1"
-                               Style="{StaticResource CaptionTextStyle}"
-                               Text="SteamLike v0.1.0"
-                               VerticalAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- Footer / status bar -->
+            <ContentControl Grid.Row="2"
+                            Style="{StaticResource StatusbarStyle}"
+                            DataContext="{Binding}" />
         </Grid>
     </ControlTemplate>
 

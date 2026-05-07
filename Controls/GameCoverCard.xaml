@@ -46,10 +46,11 @@
                                                         FallbackValue={x:Null}}"
                                        Stretch="UniformToFill" />
 
-                                <!-- Placeholder when no cover -->
-                                <Border Background="{DynamicResource HeroGradientBrush}">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
+                                <!-- Vector placeholder when no cover (from Styles/Placeholders.xaml) -->
+                                <ContentControl ContentTemplate="{StaticResource MissingCoverPlaceholderTemplate}"
+                                                Content="{Binding}">
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding CoverImage}" Value="{x:Null}">
@@ -57,14 +58,8 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Border.Style>
-                                    <TextBlock Text="{Binding Name, TargetNullValue='', FallbackValue=''}"
-                                               Style="{StaticResource H2TextStyle}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center"
-                                               Margin="14" />
-                                </Border>
+                                    </ContentControl.Style>
+                                </ContentControl>
 
                                 <!-- Bottom gradient overlay (always visible, deepens on hover) -->
                                 <Border x:Name="BottomGradient"

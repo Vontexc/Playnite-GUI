@@ -64,10 +64,17 @@
         <Grid Background="{DynamicResource BgDeepBrush}">
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
-                <StackPanel>
+                <!-- Outer wrapper: fades view in on Loaded; MaxWidth keeps
+                     content readable on ultrawide / 4K displays. -->
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.Style>
+                        <Style TargetType="Grid" BasedOn="{StaticResource FadeInOnLoadedStyle}" />
+                    </Grid.Style>
+                <StackPanel MaxWidth="1600"
+                            HorizontalAlignment="Center">
 
                     <!-- ====== 1. HERO ====== -->
-                    <Grid Height="480">
+                    <Grid MinHeight="420">
                         <!-- Trailer / background fill -->
                         <ContentControl Style="{StaticResource TrailerPlayerStyle}"
                                         DataContext="{Binding}" />
@@ -376,6 +383,7 @@
                     </StackPanel>
 
                 </StackPanel>
+                </Grid>
             </ScrollViewer>
         </Grid>
     </ControlTemplate>
